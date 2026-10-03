@@ -9,17 +9,23 @@ export const BASEMAP_STYLE: StyleSpecification = {
   sources: {
     basemap: {
       type: 'raster',
-      tiles: [
-        'https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
-        'https://b.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
-        'https://c.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
-      ],
+      // Public OSM tiles: no API key needed (CARTO basemaps now require one).
+      tiles: ['https://tile.openstreetmap.org/{z}/{x}/{y}.png'],
       tileSize: 256,
+      maxzoom: 19,
       attribution:
-        '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions">CARTO</a>',
+        '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     },
   },
-  layers: [{ id: 'basemap', type: 'raster', source: 'basemap' }],
+  layers: [
+    {
+      id: 'basemap',
+      type: 'raster',
+      source: 'basemap',
+      // Muted basemap so the coloured data layers stay readable on top of it.
+      paint: { 'raster-saturation': -0.8, 'raster-brightness-min': 0.15 },
+    },
+  ],
 };
 
 interface InitialView {
